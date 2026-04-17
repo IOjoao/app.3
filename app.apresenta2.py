@@ -12,7 +12,7 @@ opcao = st.sidebar.selectbox(
 if opcao == "INICIO":
     st.write("Você escolheu:", opcao)
     st.title("INICIO: Boa supermercados")
-    st.subheader('Analise geral de dados a abaixo em realação a dados de vendas')
+    st.subheader('Analise geral de dados abaixo')
     st.image(
     "https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-1920x1080.jpg",
     caption="Boa Supermercados",
