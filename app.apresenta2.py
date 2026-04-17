@@ -18,6 +18,14 @@ if opcao == "INICIO":
     st.subheader("ao lado um ainel com todas as informações do arquivo:")
     st.subheader("vendas 30 visualização logo abaixo")
     st.date_input("coloque sua data aqui embaixo:")
+    
+    lojas = VENDAS['numero da loja'].dropna().unique()
+
+    lojas_sel = st.multiselect(
+    "Filtrar por loja",
+    lojas,
+    default=lojas
+    )
     st.datetime_input("coloque a data via calendario")
     st.selectbox("selecione as opções a seguir",["data","numero da loja"])
     st.number_input("digite aqui o numero da loja dos dados separadamenete",min_value=1, max_value=30)
@@ -43,13 +51,21 @@ if opcao == "INICIO":
     vendas30media = VENDAS['meta de venda'].mean()
     st.subheader("media de venda 30")
     st.write(vendas30media)
+    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.subheader("assinatura: time de io")
 elif opcao == "meta de venda":
     st.set_page_config("DADOs: meta venda","📈",layout="wide")
     st.title('Analise geral de dados a abaixo em realação ao meta venda')
     st.subheader("aolado um ainel com todas as informações do arquivo:")
     st.subheader("Fluxo de análise das Analise")
+    
+    lojas = VENDAS['numero da loja'].dropna().unique()
 
+    lojas_sel = st.multiselect(
+    "Filtrar por loja",
+    lojas,
+    default=lojas
+    )
     grafico = graphviz.Digraph()
 
     grafico.node('A', 'Carregar Dados')
@@ -91,6 +107,7 @@ elif opcao == "meta de venda":
     media_cat = dados_filtrados.groupby('categoria')['meta de venda'].mean()
     st.bar_chart(media_cat)
     st.success("dados carregado")
+    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.subheader("assinatura: time de io")
 elif opcao == "quantidade venda":
     st.set_page_config("DADOS DE QTD DE VENDA","📈",layout="wide")
@@ -98,6 +115,13 @@ elif opcao == "quantidade venda":
     st.subheader("aolado um ainel com todas as informações do arquivo:")
     st.subheader("Fluxo de análise das  Analises")
 
+    lojas = VENDAS['numero da loja'].dropna().unique()
+
+    lojas_sel = st.multiselect(
+    "Filtrar por loja",
+    lojas,
+    default=lojas
+    )
     grafico = graphviz.Digraph()
     grafico.node('A', 'Carregar Dados')
     grafico.node('B', 'Analisar Vendas')
@@ -136,6 +160,7 @@ elif opcao == "quantidade venda":
 
     media_cat = dados_filtrados.groupby('categoria')['quantidade venda'].mean()
     st.bar_chart(media_cat)
+    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.success("dados carregado")
     st.subheader("assinatura: time de io")
 elif opcao == "valor venda":
@@ -143,7 +168,14 @@ elif opcao == "valor venda":
     st.title('Analise geral de dados a abaixo em realação ao Valor - Venda')
     st.subheader("ao lado um ainel com todas as informações do arquivo:")
     st.subheader("Fluxo de análise das Analise")
+    
+    lojas = VENDAS['numero da loja'].dropna().unique()
 
+    lojas_sel = st.multiselect(
+    "Filtrar por loja",
+    lojas,
+    default=lojas
+    )
     grafico = graphviz.Digraph()
     grafico.node('A', 'Carregar Dados')
     grafico.node('B', 'Analisar Vendas')
@@ -183,5 +215,6 @@ elif opcao == "valor venda":
 
     media_cat = dados_filtrados.groupby('categoria')['valor venda'].mean()
     st.bar_chart(media_cat)
+    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.success("dados carregado")
     st.subheader("assinatura: Time de io")
