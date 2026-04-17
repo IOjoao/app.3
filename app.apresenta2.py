@@ -26,6 +26,8 @@ if opcao == "INICIO":
     lojas,
     default=lojas
     )
+
+dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
     st.datetime_input("coloque a data via calendario")
     st.selectbox("selecione as opções a seguir",["data","numero da loja"])
     st.number_input("digite aqui o numero da loja dos dados separadamenete",min_value=1, max_value=30)
@@ -66,6 +68,8 @@ elif opcao == "meta de venda":
     lojas,
     default=lojas
     )
+
+    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
     grafico = graphviz.Digraph()
 
     grafico.node('A', 'Carregar Dados')
@@ -115,13 +119,15 @@ elif opcao == "quantidade venda":
     st.subheader("aolado um ainel com todas as informações do arquivo:")
     st.subheader("Fluxo de análise das  Analises")
 
-    lojas = VENDAS['numero da loja'].dropna().unique()
+   lojas = VENDAS['numero da loja'].dropna().unique()
 
     lojas_sel = st.multiselect(
     "Filtrar por loja",
     lojas,
     default=lojas
     )
+
+    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
     grafico = graphviz.Digraph()
     grafico.node('A', 'Carregar Dados')
     grafico.node('B', 'Analisar Vendas')
@@ -176,6 +182,8 @@ elif opcao == "valor venda":
     lojas,
     default=lojas
     )
+
+    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
     grafico = graphviz.Digraph()
     grafico.node('A', 'Carregar Dados')
     grafico.node('B', 'Analisar Vendas')
