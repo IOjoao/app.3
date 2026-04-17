@@ -10,14 +10,6 @@ opcao = st.sidebar.selectbox(
     ["INICIO","valor venda","quantidade venda","meta de venda"]
     )
 if opcao == "INICIO":
-    st.markdown(
-    """
-    <div style='background-color: black; padding: 10px; border-radius: 10px;'>
-        <h2 style='color: white; text-align: center;'>VENDAS GERAL</h2>
-    </div>
-    """,
-    unsafe_allow_html=True
-    )
     st.write("Você escolheu:", opcao)
     st.title("INICIO: Boa supermercados")
     st.subheader('Analise geral de dados abaixo')
@@ -30,10 +22,10 @@ if opcao == "INICIO":
     """
     <style>
     .stApp {
-        background-image: url("https://superhiper.com.br/devlop/wp-content/uploads/2025/09/Divulgacao-Boa-Supermercados.jpg");
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                          url("https://superhiper.com.br/devlop/wp-content/uploads/2025/09/Divulgacao-Boa-Supermercados.jpg");
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
     }
     </style>
     """,
