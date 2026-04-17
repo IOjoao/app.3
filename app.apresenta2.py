@@ -14,9 +14,9 @@ if opcao == "INICIO":
     st.title("INICIO: Boa supermercados")
     st.subheader('Analise geral de dados abaixo')
     st.image(
-    "https://tse3.mm.bing.net/th/id/OIP.9lG8VddiA3bdO0QtlY_95AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+    "https://superhiper.com.br/devlop/wp-content/uploads/2025/06/Boa-Supermercado_Paulinia-SP.png",
     caption="Boa Supermercados",
-    width=800
+    width=400
     )
     st.markdown(
     """
@@ -31,6 +31,7 @@ if opcao == "INICIO":
     """,
     unsafe_allow_html=True
     )
+    st.video("https://www.bing.com/videos/riverview/relatedvideo?q=video+de+como+usar+a+streamlit&refig=69e29c62b35c490cac108d94d2c7cb60&pc=DCTS&ru=%2fsearch%3fq%3dvideo%2bde%2bcomo%2busar%2ba%2bstreamlit%26form%3dANNTH1%26refig%3d69e29c62b35c490cac108d94d2c7cb60%26pc%3dDCTS&mmscn=vwrc&mid=D7169513F823549E66D6D7169513F823549E66D6&FORM=WRVORC&ntb=1&msockid=999e5cf03a9f11f18532abfde7f3bb87")
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
     st.write("TESTE ATUALIZOU AGORA")
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
@@ -81,7 +82,7 @@ elif opcao == "meta de venda":
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
 
     lojas = VENDAS['numero da loja'].dropna().unique()
-    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())   
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique(), default=VENDAS['categoria'].unique())   
     lojas_sel = st.multiselect(
     "Filtrar por loja",
     lojas,
@@ -133,14 +134,13 @@ elif opcao == "quantidade venda":
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
 
     lojas = VENDAS['numero da loja'].dropna().unique()
-
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique(), default=VENDAS['categoria'].unique())
     lojas_sel = st.multiselect(
     "Filtrar por loja",
     lojas,
     default=lojas
     )
 
-    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())
     dados_filtrados = VENDAS[
         (VENDAS['numero da loja'].isin(lojas_sel)) &
         (VENDAS['categoria'].isin(CATEGORASELECIONADA))
@@ -197,7 +197,7 @@ elif opcao == "valor venda":
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
 
-    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique(), default=VENDAS['categoria'].unique())
 # garantir tipos corretos ANTES de tudo
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
