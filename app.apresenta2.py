@@ -20,7 +20,7 @@ if opcao == "INICIO":
     )
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
-
+    CATEGORASELECIONADA = st.selectbox("Selecione a categoria", VENDAS['categoria'].unique())   
     lojas = VENDAS['numero da loja'].dropna().unique()
 
     lojas_sel = st.multiselect("Filtrar por loja", lojas, default=lojas)
@@ -64,9 +64,10 @@ elif opcao == "meta de venda":
 
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
+    VENDAS['categoria'] = VENDAS['categoria'].astype(str)
 
     lojas = VENDAS['numero da loja'].dropna().unique()
-
+    CATEGORASELECIONADA = st.selectbox("Selecione a categoria", VENDAS['categoria'].unique())   
     lojas_sel = st.multiselect(
     "Filtrar por loja",
     lojas,
@@ -74,8 +75,7 @@ elif opcao == "meta de venda":
     )
 
     dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
-
-
+    Categoria = VENDAS[VENDAS['categoria'].isin([CATEGORASELECIONADA])]
     data_inicio, data_fim = st.date_input(
     "Selecione o período:",
     [dados_filtrados['data'].min(), dados_filtrados['data'].max()],
@@ -100,11 +100,12 @@ elif opcao == "meta de venda":
     st.graphviz_chart(grafico)
 
     st.subheader("Meta de Vendas por Loja")
-    dados = dados_filtrados.set_index('numero da loja')
+    dados = dados_filtrados.set_index('numero da loja') 
     st.bar_chart(dados["meta de venda"])
 
     st.subheader("Meta de Venda por Categoria")
     dados = dados_filtrados.set_index('categoria')
+    
     st.bar_chart(dados["meta de venda"])
 
     st.subheader("Média por Loja")
