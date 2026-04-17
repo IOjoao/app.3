@@ -27,6 +27,12 @@ if opcao == "INICIO":
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        color: white; /* texto padrão */
+    }
+
+    /* força textos do Streamlit a ficarem amarelos */
+    h1, h2, h3, h4, h5, h6, p, span, label, div {
+        color: white !important;
     }
     </style>
     """,
