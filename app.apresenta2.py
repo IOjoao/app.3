@@ -11,7 +11,11 @@ opcao = st.sidebar.selectbox(
     )
 if opcao == "INICIO":
     st.markdown(
-    "<h3 style='color: white; background-color: black;'>vendas geral</h3>",
+    """
+    <div style='background-color: black; padding: 10px; border-radius: 10px;'>
+        <h2 style='color: white; text-align: center;'>VENDAS GERAL</h2>
+    </div>
+    """,
     unsafe_allow_html=True
     )
     st.write("Você escolheu:", opcao)
