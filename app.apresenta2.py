@@ -14,7 +14,7 @@ if opcao == "INICIO":
     st.title("INICIO: Boa supermercados")
     st.subheader('Analise geral de dados abaixo')
     st.image(
-    "https://superhiper.com.br/devlop/wp-content/uploads/2025/06/Boa-Supermercado_Paulinia-SP.png",
+    "https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg",
     caption="Boa Supermercados",
     width=400
     )
