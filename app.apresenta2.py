@@ -32,6 +32,7 @@ if opcao == "INICIO":
     unsafe_allow_html=True
     )
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
+    st.write("TESTE ATUALIZOU AGORA")
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)  
     lojas = VENDAS['numero da loja'].dropna().unique()
