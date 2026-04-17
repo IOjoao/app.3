@@ -9,6 +9,7 @@ opcao = st.sidebar.selectbox(
     "Escolha uma opção:",
     ["INICIO","valor venda","quantidade venda","meta de venda"]
     )
+st.write("TESTE ATUALIZOU 123")
 if opcao == "INICIO":
     st.markdown(
     "<h3 style='color: white;'>vendas geral</h3>",
