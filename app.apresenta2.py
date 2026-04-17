@@ -42,7 +42,7 @@ if opcao == "INICIO":
     maximovendas30 = VENDAS.max()
     minvendas30 = VENDAS.min()
     primeiraslinhasvendas30 = VENDAS.head(10)
-    st.subheader("maior valor vanda")
+    st.subheader("maior valor venda")
     st.write(maximovendas30)
     st.subheader("minimo valor de venda")
     st.write(minvendas30)
