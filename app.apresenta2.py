@@ -5,29 +5,31 @@ import datetime
 import graphviz
 import selenium as webdriver
 VENDAS = pd.read_excel(r"vendas_ficticias_5_lojas.xlsx")
-
 opcao = st.sidebar.selectbox(
     "Escolha uma opção:",
     ["INICIO","valor venda","quantidade venda","meta de venda"]
-)
+    )
 if opcao == "INICIO":
     st.write("Você escolheu:", opcao)
+    st.title("INICIO: Boa supermercados")
+    st.subheader('Analise geral de dados a abaixo em realação a dados de vendas')
+    st.image(
+    "https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-1920x1080.jpg",
+    caption="Boa Supermercados",
+    width=800
+    )
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
-    st.title("INICIO: PAGINA INICIAL")
-    st.title('Analise geral de dados a abaixo em realação a dados de vendas')
-    st.subheader("ao lado um ainel com todas as informações do arquivo:")
-    st.subheader("vendas 30 visualização logo abaixo")
-    st.date_input("coloque sua data aqui embaixo:")
-    
+    VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
+
     lojas = VENDAS['numero da loja'].dropna().unique()
 
-    lojas_sel = st.multiselect(
-    "Filtrar por loja",
-    lojas,
-    default=lojas
-    )
+    lojas_sel = st.multiselect("Filtrar por loja", lojas, default=lojas)
 
-dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
+    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
+
+    st.subheader("vendas filtradas")
+    st.write(dados_filtrados)
+    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
     st.datetime_input("coloque a data via calendario")
     st.selectbox("selecione as opções a seguir",["data","numero da loja"])
     st.number_input("digite aqui o numero da loja dos dados separadamenete",min_value=1, max_value=30)
@@ -35,19 +37,19 @@ dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
     st.subheader("vendas geral")
     st.write(VENDAS)
     INFOVENDAS30 = VENDAS.info()
-    st.subheader("informações de venda")
+    st.subheader("informações venda")
     st.write(INFOVENDAS30)
     maximovendas30 = VENDAS.max()
     minvendas30 = VENDAS.min()
     primeiraslinhasvendas30 = VENDAS.head(10)
-    st.subheader("maior valor de vanda")
+    st.subheader("maior valor vanda")
     st.write(maximovendas30)
-    st.subheader("minimode valor de venda")
+    st.subheader("minimo valor de venda")
     st.write(minvendas30)
     st.subheader("primeiras linhas de venda")
     st.write(primeiraslinhasvendas30)
     contagemderegistros = VENDAS.count()
-    st.subheader("contagem de registros na venda")
+    st.subheader("contagem registros venda")
     st.write(contagemderegistros)
     st.status("dados carregados")
     vendas30media = VENDAS['meta de venda'].mean()
@@ -56,11 +58,15 @@ dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
     uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.subheader("assinatura: time de io")
 elif opcao == "meta de venda":
-    st.set_page_config("DADOs: meta venda","📈",layout="wide")
-    st.title('Analise geral de dados a abaixo em realação ao meta venda')
-    st.subheader("aolado um ainel com todas as informações do arquivo:")
-    st.subheader("Fluxo de análise das Analise")
-    
+    st.set_page_config("DADOS: meta venda", "📈", layout="wide")
+
+    st.title('Análise geral de dados em relação à Meta de Venda')
+    st.subheader("Painel de análise")
+
+
+    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
+    VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
+
     lojas = VENDAS['numero da loja'].dropna().unique()
 
     lojas_sel = st.multiselect(
@@ -70,56 +76,59 @@ elif opcao == "meta de venda":
     )
 
     dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
-    grafico = graphviz.Digraph()
 
-    grafico.node('A', 'Carregar Dados')
-    grafico.node('B', 'Analisar Vendas')
-    grafico.node('C', 'Calcular Média')
-    grafico.node('D', 'Exibir Resultados')
-
-    grafico.edges(['AB', 'BC', 'CD'])
-    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
 
     data_inicio, data_fim = st.date_input(
     "Selecione o período:",
-    [VENDAS['data'].min(), VENDAS['data'].max()],
-    key="filtro_data"
+    [dados_filtrados['data'].min(), dados_filtrados['data'].max()],
+    key="filtro_data_meta"
     )
 
-    dados_filtrados = VENDAS[
-    (VENDAS['data'] >= pd.to_datetime(data_inicio)) &
-    (VENDAS['data'] <= pd.to_datetime(data_fim))
+    dados_filtrados = dados_filtrados[
+    (dados_filtrados['data'] >= pd.to_datetime(data_inicio)) &
+    (dados_filtrados['data'] <= pd.to_datetime(data_fim))
     ]
+
+# =========================
+# GRAFICO FLUXO
+# =========================
+    grafico = graphviz.Digraph()
+    grafico.node('A', 'Carregar Dados')
+    grafico.node('B', 'Filtrar')
+    grafico.node('C', 'Analisar')
+    grafico.node('D', 'Resultados')
+    grafico.edges(['AB', 'BC', 'CD'])
+
     st.graphviz_chart(grafico)
 
-
     st.subheader("Meta de Vendas por Loja")
-
     dados = dados_filtrados.set_index('numero da loja')
     st.bar_chart(dados["meta de venda"])
-    st.subheader("Meta venda por categoria")
-    dados = dados_filtrados.set_index("categoria")
+
+    st.subheader("Meta de Venda por Categoria")
+    dados = dados_filtrados.set_index('categoria')
     st.bar_chart(dados["meta de venda"])
-    st.subheader("Média por loja")
 
-    media_cat = dados_filtrados.groupby('numero da loja')['meta de venda'].mean()
-    st.bar_chart(media_cat)
-    st.success("dados carregados")
-    #
-    st.subheader("Média por categoria")
+    st.subheader("Média por Loja")
+    media_loja = dados_filtrados.groupby('numero da loja')['meta de venda'].mean()
+    st.bar_chart(media_loja)
 
+    st.subheader("Média por Categoria")
     media_cat = dados_filtrados.groupby('categoria')['meta de venda'].mean()
     st.bar_chart(media_cat)
-    st.success("dados carregado")
-    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
-    st.subheader("assinatura: time de io")
-elif opcao == "quantidade venda":
-    st.set_page_config("DADOS DE QTD DE VENDA","📈",layout="wide")
-    st.title('Analise geral dade dados a abaixo em realação ao Quantidade - Venda')
-    st.subheader("aolado um ainel com todas as informações do arquivo:")
-    st.subheader("Fluxo de análise das  Analises")
 
-   lojas = VENDAS['numero da loja'].dropna().unique()
+    st.success("Dados carregados com sucesso")
+
+    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
+elif opcao == "quantidade venda":
+    st.set_page_config("DADOS DE QTD DE VENDA", "📈", layout="wide")
+
+    st.title('Análise geral de dados em relação à Quantidade de Venda')
+    st.subheader("Painel de análise")
+
+    VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
+
+    lojas = VENDAS['numero da loja'].dropna().unique()
 
     lojas_sel = st.multiselect(
     "Filtrar por loja",
@@ -127,102 +136,119 @@ elif opcao == "quantidade venda":
     default=lojas
     )
 
+
     dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
-    grafico = graphviz.Digraph()
-    grafico.node('A', 'Carregar Dados')
-    grafico.node('B', 'Analisar Vendas')
-    grafico.node('C', 'Calcular Média')
-    grafico.node('D', 'Exibir Resultados')
-    grafico.edges(['AB', 'BC', 'CD'])
+
+
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
 
     data_inicio, data_fim = st.date_input(
     "Selecione o período:",
-    [VENDAS['data'].min(), VENDAS['data'].max()],
-    key="filtro_data"
+    [dados_filtrados['data'].min(), dados_filtrados['data'].max()],
+    key="filtro_data_qtd"
     )
-    st.graphviz_chart(grafico)
-    dados_filtrados = VENDAS[
-    (VENDAS['data'] >= pd.to_datetime(data_inicio)) &
-    (VENDAS['data'] <= pd.to_datetime(data_fim))
+
+    dados_filtrados = dados_filtrados[
+    (dados_filtrados['data'] >= pd.to_datetime(data_inicio)) &
+    (dados_filtrados['data'] <= pd.to_datetime(data_fim))
     ]
+
+    grafico = graphviz.Digraph()
+    grafico.node('A', 'Carregar Dados')
+    grafico.node('B', 'Filtrar Dados')
+    grafico.node('C', 'Analisar')
+    grafico.node('D', 'Resultados')
+    grafico.edges(['AB', 'BC', 'CD'])
+
     st.graphviz_chart(grafico)
+
 
     st.subheader("Quantidade de Vendas por Loja")
     dados = dados_filtrados.set_index('numero da loja')
     st.bar_chart(dados['quantidade venda'])
 
-    st.success("carregado com sucesso")
-    st.subheader("Quantidade de Vendas por categoria")
+    st.subheader("Quantidade de Vendas por Categoria")
     dados = dados_filtrados.set_index('categoria')
     st.bar_chart(dados['quantidade venda'])
-    st.subheader("Média por loja")
 
-    media_cat = dados_filtrados.groupby('numero da loja')['quantidade venda'].mean()
-    st.bar_chart(media_cat)
-    st.success("dados carregados")
-    #
-    st.subheader("Média por categoria")
+    st.subheader("Média por Loja")
+    media_loja = dados_filtrados.groupby('numero da loja')['quantidade venda'].mean()
+    st.bar_chart(media_loja)
 
+    st.subheader("Média por Categoria")
     media_cat = dados_filtrados.groupby('categoria')['quantidade venda'].mean()
     st.bar_chart(media_cat)
-    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
-    st.success("dados carregado")
-    st.subheader("assinatura: time de io")
+
+    st.success("Dados carregados com sucesso")
 elif opcao == "valor venda":
-    st.set_page_config("Dados: valor venda","📈",layout="wide")
-    st.title('Analise geral de dados a abaixo em realação ao Valor - Venda')
-    st.subheader("ao lado um ainel com todas as informações do arquivo:")
-    st.subheader("Fluxo de análise das Analise")
-    
+    st.set_page_config("Dados: valor venda", "📈", layout="wide")
+
+    st.title('Análise geral de dados em relação ao Valor de Venda')
+    st.subheader("Painel de análise")
+
+
+    VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
+    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
+
+
+# garantir tipos corretos ANTES de tudo
+    VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
+    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
+
+# filtro de loja
     lojas = VENDAS['numero da loja'].dropna().unique()
 
     lojas_sel = st.multiselect(
     "Filtrar por loja",
     lojas,
-    default=lojas
+    default=lojas,
+    key="filtro_loja_valor"
     )
 
     dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
-    grafico = graphviz.Digraph()
-    grafico.node('A', 'Carregar Dados')
-    grafico.node('B', 'Analisar Vendas')
-    grafico.node('C', 'Calcular Média')
-    grafico.node('D', 'Exibir Resultados')
-    grafico.edges(['AB', 'BC', 'CD'])
-    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
 
+# filtro de data
     data_inicio, data_fim = st.date_input(
     "Selecione o período:",
-    [VENDAS['data'].min(), VENDAS['data'].max()],
-    key="filtro_data"
+    [dados_filtrados['data'].min(), dados_filtrados['data'].max()],
+    key="filtro_data_valor"
     )
-    st.graphviz_chart(grafico)
-    dados_filtrados = VENDAS[
-    (VENDAS['data'] >= pd.to_datetime(data_inicio)) &
-    (VENDAS['data'] <= pd.to_datetime(data_fim))
+
+    dados_filtrados = dados_filtrados[
+    (dados_filtrados['data'] >= pd.to_datetime(data_inicio)) &
+    (dados_filtrados['data'] <= pd.to_datetime(data_fim))
     ]
+
+# =========================
+# GRAFICO FLUXO
+# =========================
+    grafico = graphviz.Digraph()
+    grafico.node('A', 'Carregar Dados')
+    grafico.node('B', 'Filtrar')
+    grafico.node('C', 'Analisar')
+    grafico.node('D', 'Resultados')
+    grafico.edges(['AB', 'BC', 'CD'])
+
     st.graphviz_chart(grafico)
 
-    st.subheader("Valor - Venda por Loja")
+# =========================
+# GRÁFICOS (SEMPRE dados_filtrados)
+# =========================
+
+    st.subheader("Valor de Venda por Loja")
     dados = dados_filtrados.set_index('numero da loja')
     st.bar_chart(dados['valor venda'])
 
-    st.success("carregado com sucesso")
-    st.subheader("Valor - Venda por categoria")
+    st.subheader("Valor de Venda por Categoria")
     dados = dados_filtrados.set_index('categoria')
     st.bar_chart(dados['valor venda'])
-    st.success("dados carregados")
-    st.subheader("Média por loja")
 
-    media_cat = dados_filtrados.groupby('numero da loja')['valor venda'].mean()
-    st.bar_chart(media_cat)
-    st.success("dados carregados")
-    #
-    st.subheader("Média por categoria")
+    st.subheader("Média por Loja")
+    media_loja = dados_filtrados.groupby('numero da loja')['valor venda'].mean()
+    st.bar_chart(media_loja)
 
+    st.subheader("Média por Categoria")
     media_cat = dados_filtrados.groupby('categoria')['valor venda'].mean()
     st.bar_chart(media_cat)
-    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
-    st.success("dados carregado")
-    st.subheader("assinatura: Time de io")
+
+    st.success("Dados carregados com sucesso")
