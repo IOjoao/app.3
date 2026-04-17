@@ -18,6 +18,19 @@ if opcao == "INICIO":
     caption="Boa Supermercados",
     width=800
     )
+    st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://tse3.mm.bing.net/th/id/OIP.9lG8VddiA3bdO0QtlY_95AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)  
