@@ -14,7 +14,7 @@ if opcao == "INICIO":
     st.title("INICIO: Boa supermercados")
     st.subheader('Analise geral de dados abaixo')
     st.image(
-    "https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-1920x1080.jpg",
+    "https://tse3.mm.bing.net/th/id/OIP.9lG8VddiA3bdO0QtlY_95AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
     caption="Boa Supermercados",
     width=800
     )
@@ -22,7 +22,7 @@ if opcao == "INICIO":
     """
     <style>
     .stApp {
-        background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvwDsniTVrhotAnJ_iQJSUMDVTAtIF-7y7uP2d-quKMLwmihUse0FgJP97IF19fmRYCZSuqIipP_JgkpHl27nUXWVMVD3J_luv3i8brhsNYkgIFz8dO5Rcs7rrrYbBgJsfNGf1n6L-kpUygwo6Twa1G0xi07JGNX5wGYaVuSFjXNzIu0OCk70jY4JY5RY/s600-rw/Captura%20de%20Tela%202024-12-18%20%C3%A0s%2019.48.40.png");
+        background-image: url("https://superhiper.com.br/devlop/wp-content/uploads/2025/09/Divulgacao-Boa-Supermercados.jpg");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
