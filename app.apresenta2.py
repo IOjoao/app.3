@@ -121,10 +121,8 @@ elif opcao == "meta de venda":
     st.subheader("Média por Categoria")
     media_cat = dados_filtrados.groupby('categoria')['meta de venda'].mean()
     st.bar_chart(media_cat)
-
-    st.success("Dados carregados com sucesso")
-
     uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
+    st.success("Dados carregados com sucesso")
 elif opcao == "quantidade venda":
     st.set_page_config("DADOS DE QTD DE VENDA", "📈", layout="wide")
 
@@ -185,7 +183,7 @@ elif opcao == "quantidade venda":
     st.subheader("Média por Categoria")
     media_cat = dados_filtrados.groupby('categoria')['quantidade venda'].mean()
     st.bar_chart(media_cat)
-
+    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.success("Dados carregados com sucesso")
 elif opcao == "valor venda":
     st.set_page_config("Dados: valor venda", "📈", layout="wide")
@@ -260,5 +258,5 @@ elif opcao == "valor venda":
     st.subheader("Média por Categoria")
     media_cat = dados_filtrados.groupby('categoria')['valor venda'].mean()
     st.bar_chart(media_cat)
-
+    uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.success("Dados carregados com sucesso")
