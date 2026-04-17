@@ -10,6 +10,10 @@ opcao = st.sidebar.selectbox(
     ["INICIO","valor venda","quantidade venda","meta de venda"]
     )
 if opcao == "INICIO":
+    st.markdown(
+    "<h3 style='color: white;'>vendas geral</h3>",
+    unsafe_allow_html=True
+    )
     st.write("Você escolheu:", opcao)
     st.title("INICIO: Boa supermercados")
     st.subheader('Analise geral de dados abaixo')
