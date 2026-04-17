@@ -18,26 +18,7 @@ if opcao == "INICIO":
     caption="Boa Supermercados",
     width=400
     )
-    st.markdown(
-    """
-    <style>
-    .stApp {
-        background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
-                          url("https://superhiper.com.br/devlop/wp-content/uploads/2025/09/Divulgacao-Boa-Supermercados.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: white; /* texto padrão */
-    }
-
-    /* força textos do Streamlit a ficarem amarelos */
-    h1, h2, h3, h4, h5, h6, p, span, label, div {
-        color: white !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
+    st.markdown( """ <style> .stApp { background-image: url("https://superhiper.com.br/devlop/wp-content/uploads/2025/09/Divulgacao-Boa-Supermercados.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     
     st.video("https://www.bing.com/videos/riverview/relatedvideo?q=video+de+como+usar+a+streamlit&refig=69e29c62b35c490cac108d94d2c7cb60&pc=DCTS&ru=%2fsearch%3fq%3dvideo%2bde%2bcomo%2busar%2ba%2bstreamlit%26form%3dANNTH1%26refig%3d69e29c62b35c490cac108d94d2c7cb60%26pc%3dDCTS&mmscn=vwrc&mid=D7169513F823549E66D6D7169513F823549E66D6&FORM=WRVORC&ntb=1&msockid=999e5cf03a9f11f18532abfde7f3bb87")
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
