@@ -20,12 +20,12 @@ if opcao == "INICIO":
     )
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
-    CATEGORASELECIONADA = st.selectbox("Selecione a categoria", VENDAS['categoria'].unique())   
+    VENDAS['categoria'] = VENDAS['categoria'].astype(str)  
     lojas = VENDAS['numero da loja'].dropna().unique()
 
     lojas_sel = st.multiselect("Filtrar por loja", lojas, default=lojas)
-
-    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())
+    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel) & VENDAS['categoria'].isin(CATEGORASELECIONADA)]
 
     st.subheader("vendas filtradas")
     st.write(dados_filtrados)
@@ -67,26 +67,18 @@ elif opcao == "meta de venda":
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
 
     lojas = VENDAS['numero da loja'].dropna().unique()
-    CATEGORASELECIONADA = st.selectbox("Selecione a categoria", VENDAS['categoria'].unique())   
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())   
     lojas_sel = st.multiselect(
     "Filtrar por loja",
     lojas,
     default=lojas
     )
 
-    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
-    Categoria = VENDAS[VENDAS['categoria'].isin([CATEGORASELECIONADA])]
-    data_inicio, data_fim = st.date_input(
-    "Selecione o período:",
-    [dados_filtrados['data'].min(), dados_filtrados['data'].max()],
-    key="filtro_data_meta"
-    )
-
-    dados_filtrados = dados_filtrados[
-    (dados_filtrados['data'] >= pd.to_datetime(data_inicio)) &
-    (dados_filtrados['data'] <= pd.to_datetime(data_fim))
+    dados_filtrados = VENDAS[
+    (VENDAS['numero da loja'].isin(lojas_sel)) &
+    (VENDAS['categoria'].isin(CATEGORASELECIONADA))
     ]
-
+    
 # =========================
 # GRAFICO FLUXO
 # =========================
@@ -105,7 +97,6 @@ elif opcao == "meta de venda":
 
     st.subheader("Meta de Venda por Categoria")
     dados = dados_filtrados.set_index('categoria')
-    
     st.bar_chart(dados["meta de venda"])
 
     st.subheader("Média por Loja")
@@ -124,7 +115,7 @@ elif opcao == "quantidade venda":
 
     st.title('Análise geral de dados em relação à Quantidade de Venda')
     st.subheader("Painel de análise")
-
+    VENDAS['categoria'] = VENDAS['categoria'].astype(str)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
 
     lojas = VENDAS['numero da loja'].dropna().unique()
@@ -135,8 +126,11 @@ elif opcao == "quantidade venda":
     default=lojas
     )
 
-
-    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())
+    dados_filtrados = VENDAS[
+        (VENDAS['numero da loja'].isin(lojas_sel)) &
+        (VENDAS['categoria'].isin(CATEGORASELECIONADA))
+    ]
 
 
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
@@ -185,11 +179,11 @@ elif opcao == "valor venda":
     st.title('Análise geral de dados em relação ao Valor de Venda')
     st.subheader("Painel de análise")
 
-
+    VENDAS['categoria'] = VENDAS['categoria'].astype(str)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
 
-
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())
 # garantir tipos corretos ANTES de tudo
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
@@ -204,7 +198,10 @@ elif opcao == "valor venda":
     key="filtro_loja_valor"
     )
 
-    dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel)]
+    dados_filtrados = VENDAS[
+        (VENDAS['numero da loja'].isin(lojas_sel)) &
+        (VENDAS['categoria'].isin(CATEGORASELECIONADA))
+    ]
 
 # filtro de data
     data_inicio, data_fim = st.date_input(
