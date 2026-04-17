@@ -9,10 +9,9 @@ opcao = st.sidebar.selectbox(
     "Escolha uma opção:",
     ["INICIO","valor venda","quantidade venda","meta de venda"]
     )
-st.write("TESTE ATUALIZOU 123")
 if opcao == "INICIO":
     st.markdown(
-    "<h3 style='color: white;'>vendas geral</h3>",
+    "<h3 style='color: white; background-color: black;'>vendas geral</h3>",
     unsafe_allow_html=True
     )
     st.write("Você escolheu:", opcao)
