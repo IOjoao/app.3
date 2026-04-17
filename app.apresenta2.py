@@ -31,8 +31,6 @@ if opcao == "INICIO":
     st.write(dados_filtrados)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
     st.datetime_input("coloque a data via calendario")
-    st.selectbox("selecione as opções a seguir",["data","numero da loja"])
-    st.number_input("digite aqui o numero da loja dos dados separadamenete",min_value=1, max_value=30)
     st.balloons()
     st.subheader("vendas geral")
     st.write(VENDAS)
