@@ -8,7 +8,7 @@ import base64
 from datetime import datetime
 import streamlit.components.v1 as components
 VENDAS = pd.read_excel(r"vendas_ficticias_5_lojas.xlsx")
-st.set_page_config("LOGIN:BOA", "📈", layout="centered")
+st.set_page_config("LOGIN: THOUGHT ANALYSIS", "📈", layout="centered")
 if "logado" not in st.session_state:
     st.session_state.logado = False
 
@@ -54,7 +54,7 @@ if opcao == "INICIO":
     )
     
     st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
-    st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
+    st.set_page_config("inicio: THOUGHT ANALYSIS ","📈","wide",initial_sidebar_state=400)
     st.write("TESTE ATUALIZOU AGORA")
     
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
