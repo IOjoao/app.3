@@ -6,6 +6,7 @@ import graphviz
 import selenium as webdriver
 import base64
 from datetime import datetime
+import streamlit.components.v1 as components
 VENDAS = pd.read_excel(r"vendas_ficticias_5_lojas.xlsx")
 st.set_page_config("LOGIN:BOA", "📈", layout="centered")
 if "logado" not in st.session_state:
@@ -47,8 +48,12 @@ if opcao == "INICIO":
     output_format="auto",
     use_container_width=False,
     )
+    st.markdown(
+    '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Assistir no YouTube</a>',
+    unsafe_allow_html=True
+    )
+    
     st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
-    st.video("https://www.bing.com/videos/riverview/relatedvideo?q=video+de+como+usar+a+streamlit&refig=69e29c62b35c490cac108d94d2c7cb60&pc=DCTS&ru=%2fsearch%3fq%3dvideo%2bde%2bcomo%2busar%2ba%2bstreamlit%26form%3dANNTH1%26refig%3d69e29c62b35c490cac108d94d2c7cb60%26pc%3dDCTS&mmscn=vwrc&mid=D7169513F823549E66D6D7169513F823549E66D6&FORM=WRVORC&ntb=1&msockid=999e5cf03a9f11f18532abfde7f3bb87")
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
     st.write("TESTE ATUALIZOU AGORA")
     
