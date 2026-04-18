@@ -4,37 +4,63 @@ import pandas as pd
 import datetime
 import graphviz
 import selenium as webdriver
+import base64
+from datetime import datetime
 VENDAS = pd.read_excel(r"vendas_ficticias_5_lojas.xlsx")
+st.set_page_config("LOGIN:BOA", "📈", layout="centered")
+if "logado" not in st.session_state:
+    st.session_state.logado = False
+
+    st.markdown( """ <style> .stApp { background-image: url(""); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)   
+# tela de login
+if not st.session_state.logado:
+    st.title("Login: Boa Supermercados")
+    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    
+    usuario = st.text_input("Usuário")
+    senha = st.text_input("Senha", type="password")
+
+    if st.button("Entrar"):
+        if usuario == "BOA.io" and senha == "Inteligencia@1110":
+            st.session_state.logado = True
+            st.success("Login bem-sucedido!")
+            time.sleep(1)
+            st.rerun()
+        else:
+            st.error("Usuário ou senha incorretos.")
+    st.stop()
+
 opcao = st.sidebar.selectbox(
     "Escolha uma opção:",
-    ["INICIO","valor venda","quantidade venda","meta de venda"]
+    ["INICIO","valor venda","quantidade venda","meta de venda","informaçoes app"]
     )
 if opcao == "INICIO":
     st.write("Você escolheu:", opcao)
     st.title("INICIO: Boa supermercados")
     st.subheader('Analise geral de dados abaixo')
     st.image(
-    "https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg",
+    "https://mir-s3-cdn-cf.behance.net/projects/max_808/c97177162211407.Y3JvcCwyMDEzLDE1NzUsMTA0MSwzNzg.jpg",
     caption="Boa Supermercados",
-    width=400
+    width=280,
+    clamp=True,
+    channels="RGB",
+    output_format="auto",
+    use_container_width=False,
     )
-    st.markdown( """ <style> .stApp { background-image: url("https://mir-s3-cdn-cf.behance.net/projects/max_808/c97177162211407.Y3JvcCwyMDEzLDE1NzUsMTA0MSwzNzg.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
-    
+    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     st.video("https://www.bing.com/videos/riverview/relatedvideo?q=video+de+como+usar+a+streamlit&refig=69e29c62b35c490cac108d94d2c7cb60&pc=DCTS&ru=%2fsearch%3fq%3dvideo%2bde%2bcomo%2busar%2ba%2bstreamlit%26form%3dANNTH1%26refig%3d69e29c62b35c490cac108d94d2c7cb60%26pc%3dDCTS&mmscn=vwrc&mid=D7169513F823549E66D6D7169513F823549E66D6&FORM=WRVORC&ntb=1&msockid=999e5cf03a9f11f18532abfde7f3bb87")
     st.set_page_config("inicio: dados gerais","📈","wide",initial_sidebar_state=400)
     st.write("TESTE ATUALIZOU AGORA")
+    
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)  
     lojas = VENDAS['numero da loja'].dropna().unique()
-
     lojas_sel = st.multiselect("Filtrar por loja", lojas, default=lojas)
-    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique())
+    CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique(), default=VENDAS['categoria'].unique())
     dados_filtrados = VENDAS[VENDAS['numero da loja'].isin(lojas_sel) & VENDAS['categoria'].isin(CATEGORASELECIONADA)]
 
     st.subheader("vendas filtradas")
     st.write(dados_filtrados)
-    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
-    st.datetime_input("coloque a data via calendario")
     st.balloons()
     st.subheader("vendas geral")
     st.write(VENDAS)
@@ -55,18 +81,20 @@ if opcao == "INICIO":
     st.write(contagemderegistros)
     st.status("dados carregados")
     vendas30media = VENDAS['meta de venda'].mean()
-    st.subheader("media de venda 30")
+    st.subheader("media de vendas")
     st.write(vendas30media)
+    st.subheader("descrição geral de vendas")
+    st.table(VENDAS.describe())
     uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
+    
     st.subheader("assinatura: time de io")
 elif opcao == "meta de venda":
     st.set_page_config("DADOS: meta venda", "📈", layout="wide")
 
     st.title('Análise geral de dados em relação à Meta de Venda')
     st.subheader("Painel de análise")
+    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
 
-
-    VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
 
@@ -77,10 +105,10 @@ elif opcao == "meta de venda":
     lojas,
     default=lojas
     )
-
     dados_filtrados = VENDAS[
     (VENDAS['numero da loja'].isin(lojas_sel)) &
-    (VENDAS['categoria'].isin(CATEGORASELECIONADA))
+    (VENDAS['categoria'].isin(CATEGORASELECIONADA)) &
+    (VENDAS['data'] == pd.to_datetime(VENDAS['data']))
     ]
     
 # =========================
@@ -119,7 +147,7 @@ elif opcao == "quantidade venda":
     st.subheader("Painel de análise")
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
-
+    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     lojas = VENDAS['numero da loja'].dropna().unique()
     CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique(), default=VENDAS['categoria'].unique())
     lojas_sel = st.multiselect(
@@ -179,17 +207,17 @@ elif opcao == "valor venda":
 
     st.title('Análise geral de dados em relação ao Valor de Venda')
     st.subheader("Painel de análise")
-
+    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
 
     CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique(), default=VENDAS['categoria'].unique())
-# garantir tipos corretos ANTES de tudo
+
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
 
-# filtro de loja
+
     lojas = VENDAS['numero da loja'].dropna().unique()
 
     lojas_sel = st.multiselect(
@@ -204,7 +232,6 @@ elif opcao == "valor venda":
         (VENDAS['categoria'].isin(CATEGORASELECIONADA))
     ]
 
-# filtro de data
     data_inicio, data_fim = st.date_input(
     "Selecione o período:",
     [dados_filtrados['data'].min(), dados_filtrados['data'].max()],
@@ -216,9 +243,6 @@ elif opcao == "valor venda":
     (dados_filtrados['data'] <= pd.to_datetime(data_fim))
     ]
 
-# =========================
-# GRAFICO FLUXO
-# =========================
     grafico = graphviz.Digraph()
     grafico.node('A', 'Carregar Dados')
     grafico.node('B', 'Filtrar')
@@ -227,10 +251,6 @@ elif opcao == "valor venda":
     grafico.edges(['AB', 'BC', 'CD'])
 
     st.graphviz_chart(grafico)
-
-# =========================
-# GRÁFICOS (SEMPRE dados_filtrados)
-# =========================
 
     st.subheader("Valor de Venda por Loja")
     dados = dados_filtrados.set_index('numero da loja')
@@ -249,3 +269,17 @@ elif opcao == "valor venda":
     st.bar_chart(media_cat)
     uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
     st.success("Dados carregados com sucesso")
+elif opcao == "informaçoes app":
+    st.title("Informações do App")
+    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.subheader("Sobre o App")
+    st.write("Este aplicativo foi desenvolvido para analisar os dados de vendas da Boa Supermercados. Ele permite que os usuários explorem diferentes aspectos das vendas, como valor, quantidade e metas, por loja e categoria.")
+    st.subheader("Funcionalidades")
+    st.write("- Análise de valor de venda por loja e categoria")
+    st.write("- Análise de quantidade de venda por loja e categoria")
+    st.write("- Análise de metas de venda por loja e categoria")
+    st.write("- Filtros avançados por loja, categoria e período")
+    st.subheader("Equipe de Desenvolvimento")
+    st.write("Este aplicativo foi desenvolvido pela equipe de Inteligência do Boa Supermercados, com o objetivo de fornecer insights valiosos para a tomada de decisões estratégicas.")
+    st.subheader("Contato")
+    st.write("Para dúvidas, sugestões ou feedback, entre em contato conosco através do email: joao.altafini@smboa.com.br")
