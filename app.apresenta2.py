@@ -42,16 +42,15 @@ if opcao == "INICIO":
     st.image(
     "https://mir-s3-cdn-cf.behance.net/projects/max_808/c97177162211407.Y3JvcCwyMDEzLDE1NzUsMTA0MSwzNzg.jpg",
     caption="Boa Supermercados",
+
     width=280,
     clamp=True,
     channels="RGB",
     output_format="auto",
     use_container_width=False,
     )
-    st.markdown(
-    '<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Assistir no YouTube</a>',
-    unsafe_allow_html=True
-    )
+    st.write("Assista ao video de explicação:")
+    st.write("https://youtu.be/8J8ukeuXaWw?si=lDO62Oh08qNMr8xO")
     
     st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     st.set_page_config("inicio: THOUGHT ANALYSIS ","📈","wide",initial_sidebar_state=400)
