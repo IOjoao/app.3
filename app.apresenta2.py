@@ -7,7 +7,7 @@ import selenium as webdriver
 import base64
 from datetime import datetime
 import streamlit.components.v1 as components
-import google.generativeai as genai
+import genai
 VENDAS = pd.read_excel(r"vendas_ficticias_5_lojas.xlsx")
 st.set_page_config("LOGIN: THOUGHT ANALYSIS", "📈", layout="centered")
 if "logado" not in st.session_state:
