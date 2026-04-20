@@ -7,6 +7,7 @@ import selenium as webdriver
 import base64
 from datetime import datetime
 import streamlit.components.v1 as components
+from google import genai
 VENDAS = pd.read_excel(r"vendas_ficticias_5_lojas.xlsx")
 st.set_page_config("LOGIN: THOUGHT ANALYSIS", "📈", layout="centered")
 if "logado" not in st.session_state:
@@ -33,7 +34,7 @@ if not st.session_state.logado:
 
 opcao = st.sidebar.selectbox(
     "Escolha uma opção:",
-    ["INICIO","valor venda","quantidade venda","meta de venda","informaçoes app"]
+    ["INICIO","valor venda","quantidade venda","meta de venda","IA","informaçoes app"]
     )
 if opcao == "INICIO":
     st.write("Você escolheu:", opcao)
@@ -53,7 +54,7 @@ if opcao == "INICIO":
     st.write("https://youtu.be/8J8ukeuXaWw?si=lDO62Oh08qNMr8xO")
     
     st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
-    st.set_page_config("inicio: THOUGHT ANALYSIS ","📈","wide",initial_sidebar_state=400)
+    st.set_page_config("inicio: Solution DATA","📈","wide",initial_sidebar_state=400)
     st.write("TESTE ATUALIZOU AGORA")
     
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
@@ -287,3 +288,26 @@ elif opcao == "informaçoes app":
     st.write("Este aplicativo foi desenvolvido pela equipe de Inteligência do Boa Supermercados, com o objetivo de fornecer insights valiosos para a tomada de decisões estratégicas.")
     st.subheader("Contato")
     st.write("Para dúvidas, sugestões ou feedback, entre em contato conosco através do email: joao.altafini@smboa.com.br")
+
+
+elif opcao == "IA":
+    cliente = genai.Client(api_key="AIzaSyC9n2sXo5m8Zt3j1vX9z5y6w7x8y9z0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6")
+    st.title("IA criada por João Altafini: Boa Supermercados")
+    st.subheader("Assista ao video de explicação da IA:")
+    st.write("https://youtu.be/8J8ukeuXaWw?si=lDO62Oh08qNMr8xO")
+    st.markdown( """ <style> .stApp { background-image: url("https://brainpod.ai/wp-content/uploads/2025/08/artificial-intelligence-images-generator.png"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.subheader("Faça sua pergunta:")
+    pergunta = st.text_input("Digite sua pergunta aqui")
+    if st.button("ENVIAR"):
+        resposta = cliente.models.generate_content(
+            model="models/gpt-4o",
+            input=[
+        {
+                    "role": "user",
+                    "content": pergunta
+        }
+        ]
+        )
+        st.subheader("Resposta De LIZARD:")
+        st.write(resposta.text)
+        
