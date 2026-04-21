@@ -15,8 +15,8 @@ if "logado" not in st.session_state:
     st.markdown( """ <style> .stApp { background-image: url(""); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)   
 # tela de login
 if not st.session_state.logado:
-    st.title("Login: Boa Supermercados")
-    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.title("Login: Thought Analysis")
+    st.markdown( """ <style> .stApp { background-image: url("https://treinamentosaf.com.br/wp-content/uploads/2025/06/inteligencia-artificial.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     
     usuario = st.text_input("Usuário")
     senha = st.text_input("Senha", type="password")
@@ -39,8 +39,7 @@ if opcao == "INICIO":
     st.write("Você escolheu:", opcao)
     st.title("INICIO: Boa supermercados")
     st.subheader('Analise geral de dados abaixo')
-    st.audio("music-sample-128kbps.mp3",autoplay=True)
-
+    
     width=280,
     clamp=True,
     channels="RGB",
@@ -50,7 +49,7 @@ if opcao == "INICIO":
     st.write("Assista ao video de explicação:")
     st.write("https://youtu.be/8J8ukeuXaWw?si=lDO62Oh08qNMr8xO")
     
-    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.markdown( """ <style> .stApp { background-image: url("https://www.intellspot.com/wp-content/uploads/2021/07/Artificial-Intelligence-Image.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     st.set_page_config("inicio: Solution DATA","📈","wide",initial_sidebar_state=400)
     st.write("TESTE ATUALIZOU AGORA")
     
@@ -88,14 +87,14 @@ if opcao == "INICIO":
     st.subheader("descrição geral de vendas")
     st.table(VENDAS.describe())
     uploaded_file = st.file_uploader("Faça upload de um arquivo", type=["csv", "xlsx"])
-    
+    st.audio("ytmp3free.cc_stargazer-youtubemp3free.org.mp3",autoplay=True)
     st.subheader("assinatura: time de io")
 elif opcao == "meta de venda":
     st.set_page_config("DADOS: meta venda", "📈", layout="wide")
 
     st.title('Análise geral de dados em relação à Meta de Venda')
     st.subheader("Painel de análise")
-    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.markdown( """ <style> .stApp { background-image: url(""); background-size: cover; background-position: center; background-repeat: no-https://www.intellspot.com/wp-content/uploads/2021/07/Artificial-Intelligence-Image.jpgrepeat; } </style> """, unsafe_allow_html=True)
 
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
@@ -149,7 +148,7 @@ elif opcao == "quantidade venda":
     st.subheader("Painel de análise")
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
-    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.markdown( """ <style> .stApp { background-image: url("https://www.intellspot.com/wp-content/uploads/2021/07/Artificial-Intelligence-Image.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     lojas = VENDAS['numero da loja'].dropna().unique()
     CATEGORASELECIONADA = st.multiselect("Selecione a categoria", VENDAS['categoria'].unique(), default=VENDAS['categoria'].unique())
     lojas_sel = st.multiselect(
@@ -209,7 +208,7 @@ elif opcao == "valor venda":
 
     st.title('Análise geral de dados em relação ao Valor de Venda')
     st.subheader("Painel de análise")
-    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.markdown( """ <style> .stApp { background-image: url("https://www.intellspot.com/wp-content/uploads/2021/07/Artificial-Intelligence-Image.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     VENDAS['categoria'] = VENDAS['categoria'].astype(str)
     VENDAS['numero da loja'] = VENDAS['numero da loja'].astype(str)
     VENDAS['data'] = pd.to_datetime(VENDAS['data'], errors='coerce')
@@ -273,7 +272,7 @@ elif opcao == "valor venda":
     st.success("Dados carregados com sucesso")
 elif opcao == "informaçoes app":
     st.title("Informações do App")
-    st.markdown( """ <style> .stApp { background-image: url("https://epgrupo.com.br/wp-content/uploads/2025/01/Boa-Samuel-Fachada-scaled.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
+    st.markdown( """ <style> .stApp { background-image: url("https://www.intellspot.com/wp-content/uploads/2021/07/Artificial-Intelligence-Image.jpg"); background-size: cover; background-position: center; background-repeat: no-repeat; } </style> """, unsafe_allow_html=True)
     st.subheader("Sobre o App")
     st.write("Este aplicativo foi desenvolvido para analisar os dados de vendas da Boa Supermercados. Ele permite que os usuários explorem diferentes aspectos das vendas, como valor, quantidade e metas, por loja e categoria.")
     st.subheader("Funcionalidades")
